@@ -1,0 +1,52 @@
+# This workflow will install Python dependencies, run tests and lint with a single version of Python
+# For more information see: https://help.github.com/actions/language-and-framework-guides/using-python-with-github-actions
+
+name: Python application
+
+on:
+  push:
+    branches: [master]
+  pull_request:
+    branches: [master]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v2
+      - name: Set up Python 3.7
+        uses: actions/setup-python@v2
+        with:
+          python-version: "3.7"
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
+      - name: Update AD rules
+        run: |
+          cd factory
+          python ad.py
+      - name: Update GFW list
+        run: |
+          cd factory
+          python gfwlist.py
+      - name: Update CHN routes
+        run: |
+          cd factory
+          python chnroutes.py
+      - name: Update Top 500 list
+        run: |
+          cd factory
+          python top500.py
+      - name: Build confs
+        run: |
+          cd factory
+          python build_confs.py
+      - name: Commit
+        run: |
+          git add .
+          git config user.email "action@github.com"
+          git config user.name "GitHub Action"
+          git commit -m "Nightly build" -m "已合并最新的去广告规则及 GFWList"
+          git push
