@@ -37,10 +37,10 @@ jobs:
         run: |
           cd factory
           python chnroutes.py
-      - name: Update Top 500 list
-        run: |
-          cd factory
-          python top500.py
+#      - name: Update Top 500 list
+#        run: |
+#          cd factory
+#          python top500.py
       - name: Build confs
         run: |
           cd factory
