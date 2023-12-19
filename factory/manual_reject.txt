@@ -3,6 +3,9 @@
 #待反馈是否误杀
 ad.12306.cn
 
+#网易
+s.166.net
+
 #百度（可能有多余项）
 eclick.baidu.com
 entry.baidu.com
